@@ -2,7 +2,7 @@
   <v-app id="keep">
     <v-app-bar app clipped-left color="amber">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <span class="title ml-3 mr-5">OBOE</span>
+      <a class="title ml-3 mr-5" href="/blog">OBOE</a>
       <v-spacer></v-spacer>
       <SearchBox />
     </v-app-bar>
@@ -11,7 +11,8 @@
       <v-list dense class="grey lighten-4">
         <template v-for="(item, i) in items">
           <v-divider v-if="item.divider" :key="i" dark class="my-4"></v-divider>
-          <v-list-item v-else :key="i" @click="$router.push(item.href)">
+          <a v-else :key="i" :href="`/blog${item.href}`">
+          <v-list-item >
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -19,6 +20,7 @@
               <v-list-item-title class="grey--text">{{ item.text }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          </a>
         </template>
       </v-list>
     </v-navigation-drawer>
@@ -43,17 +45,13 @@ export default {
   },
   data: () => ({
     drawer: null,
-    items: [
-      { icon: "lightbulb_outline", text: "About Me", href: "/Aboutme/" },
-      { divider: true },
-      { text: "Blog with VuePress", href: "/" }
-    ]
+    items: []
   }),
   mounted() {
-    console.log(this.$site);
-    console.log(this.$page);
+    // console.log(this.$site);
+    // console.log(this.$page);
     this.items = [
-      { icon: "lightbulb_outline", text: "About Me", href: "/Aboutme/" },
+      { icon: "lightbulb_outline", text: "About Me", href: "/Aboutme.html" },
       { divider: true }
     ];
     let top2 = this.$site.pages
@@ -61,7 +59,8 @@ export default {
         return (
           new Date(x.frontmatter.createdDate) <=
             new Date(this.$page.frontmatter.createdDate) &&
-          x.path != "/Aboutme.html"
+          x.path != "/Aboutme.html" &&
+          x.key != this.$page.key
         );
       })
       .map(x => {

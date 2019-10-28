@@ -1,6 +1,6 @@
 ---
 title: VuePress with Vuetify
-lang: vn
+lang: en-US
 createdDate: 2019/10/28 10:00
 ---
 # Giới thiệu
